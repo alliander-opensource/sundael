@@ -1,0 +1,212 @@
+[build-system]
+requires = ["uv_build>=0.10.8,<0.11.0"]
+build-backend = "uv_build"
+
+[project]
+name = "sundael"
+version = "1.0.0"
+description = "Functionality related to PV (such as disaggregation of profiles)"
+authors = [
+    { name = "Jacco Heres", email = "jacco.heres@alliander.com" },
+    { name = "Jeroen van de Logt", email = "jeroen.vande.logt@alliander.com" },
+    { name = "Martijn van Braak", email = "martijn.van.braak@alliander.com" },
+    { name = "Simon van Heeringen", email = "simon.van.heeringen@alliander.com" },
+    { name = "Wieske de Swart" },
+]
+requires-python = ">=3.13,<4"
+readme = "README.md"
+classifiers = [
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+    "numba>=0",
+    "pandas>=2.2,<3",
+    "pandera[polars]>=0",
+    "polars>=1.39",
+    "pyarrow",
+    "pvlib",
+    "scipy>=1.14",
+    "seaborn>=0",
+    "structlog",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29",
+    "pytest>=8.2",
+    "pytest-cov>=5.0",
+    "mypy>=1.10",
+    "ruff>=0",
+    "polars>=1.30",
+    "hvplot>=0",
+    "types-requests>=2.32",
+    "pytest-mock>=3.14",
+    "scikit-learn>=1.7",
+    "cloudpathlib>=0.21",
+    "tqdm>=4.67",
+    "responses>=0.25",
+    "jupyter==1.1.1",
+    "jupyter-core>=5.9.1",
+    "poethepoet>=0.46.0",
+]
+
+[tool.uv]
+default-groups = "all"
+# llvmlite 0.46+ has an invalid SPDX license expression that fails Bearer code security scans.
+# Constrain to <0.46 until upstream fixes their metadata (https://github.com/numba/llvmlite).
+constraint-dependencies = ["llvmlite<0.46"]
+
+[tool.uv.exclude-newer-package]
+"jupyter_server" = "3 days" # Overrides the cooldown
+
+
+[[tool.uv.index]]
+name = "artifactory"
+url = "https://alliander.jfrog.io/artifactory/api/pypi/pypi-all/simple"
+publish-url = "https://alliander.jfrog.io/artifactory/api/pypi/pypi-all"
+default = true
+exclude-newer = "7 days"
+authenticate = "always"
+
+
+[tool.mypy]
+ignore_missing_imports = true
+# required to support namespace packages
+# https://github.com/python/mypy/issues/14057
+explicit_package_bases = true
+strict = true
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "src"
+]
+addopts = "--cov=src --cov-report=xml --cov-branch --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ['src/sundael']
+relative_files = true
+
+[tool.ruff]
+output-format = "github"
+line-length = 120
+show-fixes = true
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # pep8-naming
+    "N",
+    # mccabe complexity
+    "C90",
+    # Ensures docstrings
+    "D",
+    # Ensure we don't redefine/shadow python builtins
+    "A",
+    # Check for print messages
+    "T201" 
+]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+ignore = ["D203", "D213"]
+exclude= ["notebooks/*"]
+pydocstyle.convention = "google"
+
+[tool.ruff.format]
+# Enable reformatting of code snippets in docstrings.
+docstring-code-format = true
+
+
+[tool.poe.executor]
+# Forcing uv (which would be automagically detected anyway) to make the frozen option below relevant
+type = "uv"
+# Do not try to check versions when running poe tasks. Sure to save some precious milliseconds!
+frozen = true
+
+
+[tool.poe.tasks.qual]
+help = "Run all CI/quality checks."
+control.expr = "check" # There is no pass through option (yet?) so use a control expression to pass --check option to tasks when relevant
+args = [{name = "check", type="boolean", help= "Does not correct files, only warns"}]
+# NB: ruff needs the linter (which will sort imports) to run before the formatter (which cannot sort imports).
+
+  [[tool.poe.tasks.qual.switch]]
+  case     = "True"
+  sequence = ["lint --check", "format --check", "lock", "type", "cover", "report"]
+
+  [[tool.poe.tasks.qual.switch]]
+  sequence = ["lint", "format", "lock", "type", "cover", "report"]
+
+ignore_fail = "return_non_zero" # run all tasks no matter what, but return non-zero if one fails.
+
+[tool.poe.tasks.lint]
+help = "Lint code (with ruff)"
+# --no-fix does override --fix in ruff, if --check is given to poe.
+cmd = 'ruff check --fix --show-fixes ${check:+ --no-fix}'
+args=[{name = "check", type="boolean", help= "Does not correct files, only warns"}]
+
+[tool.poe.tasks.format]
+help = "Format code (with ruff)"
+cmd = 'ruff format ${check:+ --diff}'
+args=[{name = "check", type="boolean", help= "Does not correct files, only warns"}]
+
+[tool.poe.tasks.lock]
+help = "Asserts that dependencies are locked"
+cmd = "uv lock --check"
+
+[tool.poe.tasks.type]
+help = "Check typing (with mypy)"
+cmd = "mypy --strict ."
+
+
+[tool.poe.tasks.tests]
+# Coverage is actually quite slow and has a lot of overhead (sometimes 25/50%).
+# Add --fast to the cli to skip coverage.
+help = "Run tests"
+control.expr = " 'fast' if fast else 'slow' "
+args = [{name = "fast", type="boolean", help= "Just run, no coverage"}]
+    [[tool.poe.tasks.tests.switch]]
+    case = "fast"
+    ref = "tests-fast"
+
+    [[tool.poe.tasks.tests.switch]]
+    case = "slow"
+    ref = "cover"
+
+[tool.poe.tasks.tests-fast]
+help = "Run tests faster (without gathering coverage and in parallel, great locally)"
+cmd = "pytest -p no:cov --numprocesses=auto"
+
+[tool.poe.tasks.cover]
+help = "Run tests (and gather coverage)"
+# Cover src and tests, but do not output results (will be done in the next step).
+cmd = "pytest --cov=src --cov=tests --cov-branch --cov-report="
+
+[tool.poe.tasks.report]
+help = "Generate coverage report. Will use data from a previous cover command."
+sequence = [
+    {cmd="coverage report"},
+    # Check if all written tests are actually run.
+    # --omit is to override the default omit for coverage of actual sources.
+    {cmd="coverage report --fail-under 98 --include='tests/*' --omit='cheese'"}
+]
+
+[tool.poe.tasks.coverage]
+help = "Run coverage *and* generate report"
+sequence = ["cover", "report"]
+

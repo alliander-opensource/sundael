@@ -1,0 +1,14 @@
+.venv
+*.pyc
+.coverage
+coverage.xml
+dist/*
+build/*
+coverage-reports/*
+**/__pycache__/*
+..Rcheck
+*.sarif
+notebooks/test_data/*parquet
+notebooks/test.ipynb
+examples/.ipynb_checkpoints/
+examples/data/*csv

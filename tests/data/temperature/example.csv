@@ -1,0 +1,61 @@
+# Opmerking: door stationsverplaatsingen en veranderingen in waarneemmethodieken zijn deze tijdreeksen van uurwaarden mogelijk inhomogeen! Dat betekent dat deze reeks van gemeten waarden niet geschikt is voor trendanalyse. Voor studies naar klimaatverandering verwijzen we naar de gehomogeniseerde dagreeksen <http://www.knmi.nl/nederland-nu/klimatologie/daggegevens> of de Centraal Nederland Temperatuur <http://www.knmi.nl/kennis-en-datacentrum/achtergrond/centraal-nederland-temperatuur-cnt>.
+# 
+# SOURCE: ROYAL NETHERLANDS METEOROLOGICAL INSTITUTE (KNMI)
+# Comment: These time series are inhomogeneous because of station relocations and changes in observation techniques. As a result these series are not suitable for trend analysis. For climate change studies we refer to the homogenized series of daily data <http://www.knmi.nl/nederland-nu/klimatologie/daggegevens> or the Central Netherlands Temperature <http://www.knmi.nl/kennis-en-datacentrum/achtergrond/centraal-nederland-temperatuur-cnt>.
+# 
+# STN         LON(east)   LAT(north)  ALT(m)      NAME
+# 260         5.180       52.100      1.90        De Bilt     
+# YYYYMMDD  : datum (YYYY=jaar;MM=maand;DD=dag)
+# HH        : tijd (HH=uur; UT.12 UT=13 MET; 14 MEZT. Uurvak 05 loopt van 04.00 UT tot 5.00 UT
+# T         : Temperatuur (in 0.1 graden Celsius) op 1.50 m hoogte tijdens de waarneming / Temperature (in 0.1 degrees Celsius) at 1.50 m at the time of observation
+# T10N      : Minimumtemperatuur (in 0.1 graden Celsius) op 10 cm hoogte in de afgelopen 6 uur / Minimum temperature (in 0.1 degrees Celsius) at 0.1 m in the preceding 6-hour period
+# TD        : Dauwpuntstemperatuur (in 0.1 graden Celsius) op 1.50 m hoogte tijdens de waarneming / Dew point temperature (in 0.1 degrees Celsius) at 1.50 m at the time of observation
+# STN,YYYYMMDD,   HH,    T, T10N,   TD
+  260,20230101,    1,  155,     ,   75
+  260,20230101,    2,  150,     ,   75
+  260,20230101,    3,  149,     ,   74
+  260,20230101,    4,  139,     ,   82
+  260,20230101,    5,  131,     ,   84
+  260,20230101,    6,  129,  122,   70
+  260,20230101,    7,  125,     ,   60
+  260,20230101,    8,  116,     ,   63
+  260,20230101,    9,  115,     ,   64
+  260,20230101,   10,  120,     ,   70
+  260,20230101,   11,  128,     ,   80
+  260,20230101,   12,  123,  107,   87
+  260,20230101,   13,  129,     ,   80
+  260,20230101,   14,  125,     ,   82
+  260,20230101,   15,  123,     ,   84
+  260,20230101,   16,  122,     ,   84
+  260,20230101,   17,  121,     ,   86
+  260,20230101,   18,  115,  109,   87
+  260,20230101,   19,  107,     ,   96
+  260,20230101,   20,  106,     ,   98
+  260,20230101,   21,  105,     ,  100
+  260,20230101,   22,  106,     ,  100
+  260,20230101,   23,  113,     ,   99
+  260,20230101,   24,  114,  102,  101
+  260,20230102,    1,  114,     ,  101
+  260,20230102,    2,  119,     ,  103
+  260,20230102,    3,  122,     ,  105
+  260,20230102,    4,  127,     ,  108
+  260,20230102,    5,  124,     ,  110
+  260,20230102,    6,   99,   97,   89
+  260,20230102,    7,   93,     ,   83
+  260,20230102,    8,   89,     ,   78
+  260,20230102,    9,   91,     ,   74
+  260,20230102,   10,   90,     ,   71
+  260,20230102,   11,   93,     ,   73
+  260,20230102,   12,   97,   87,   73
+  260,20230102,   13,   97,     ,   75
+  260,20230102,   14,   91,     ,   79
+  260,20230102,   15,   92,     ,   75
+  260,20230102,   16,   89,     ,   66
+  260,20230102,   17,   85,     ,   66
+  260,20230102,   18,   71,   59,   55
+  260,20230102,   19,   69,     ,   50
+  260,20230102,   20,   57,     ,   47
+  260,20230102,   21,   52,     ,   45
+  260,20230102,   22,   49,     ,   38
+  260,20230102,   23,   52,     ,   35
+  260,20230102,   24,   45,   19,   28
