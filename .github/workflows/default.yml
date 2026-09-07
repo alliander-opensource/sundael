@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: [self-hosted, Linux, ubuntu-24]
+    runs-on: [managed-linux]
     steps:
 
       - name: Check out source code
