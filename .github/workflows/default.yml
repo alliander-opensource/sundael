@@ -6,11 +6,12 @@ on:
   pull_request:
 
 permissions:
-  id-token: write # Required for getting the access token for Artifactory
+  id-token: write
   contents: read
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     steps:
 
       - name: Check out source code
