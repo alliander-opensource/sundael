@@ -12,8 +12,8 @@ jobs:
     runs-on: 
       group: managed-linux
     outputs:
-      published: ${{ steps.semantic-release.outputs.new-release-published }}
-      version: ${{ steps.semantic-release.outputs.new-release-version }}
+      published: ${{ steps.semantic-release.outputs.new_release_published }}
+      version: ${{ steps.semantic-release.outputs.new_release_version }}
     steps:
       - name: Check out source code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
