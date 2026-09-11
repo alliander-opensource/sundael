@@ -9,7 +9,8 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: 
+      group: managed-linux
     outputs:
       published: ${{ steps.semantic-release.outputs.new-release-published }}
       version: ${{ steps.semantic-release.outputs.new-release-version }}
@@ -35,7 +36,8 @@ jobs:
   publish:
     needs: release
     if: needs.release.outputs.published == 'true'
-    runs-on: ubuntu-latest
+    runs-on: 
+      group: managed-linux
     permissions:
       contents: read
       id-token: write
