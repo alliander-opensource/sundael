@@ -459,7 +459,13 @@ class PVDisaggregator:
         """Extract year from date and sum by year."""
         grouped_df = df.T
         grouped_df["year"] = grouped_df.index.to_series().dt.year
-        grouped_df = grouped_df.groupby("year").sum().reset_index().melt(id_vars="year").set_index(["variable", "year"])
+        grouped_df = (
+            grouped_df.groupby("year")
+            .sum()
+            .reset_index()
+            .melt(id_vars="year", var_name="variable", value_name="value")
+            .set_index(["variable", "year"])
+        )
 
         return grouped_df
 
@@ -519,12 +525,12 @@ class PVDisaggregator:
                 tmp.groupby("year")
                 .mean()
                 .reset_index()
-                .melt(id_vars="year", value_name="mean_self_consumption")
+                .melt(id_vars="year", var_name="variable", value_name="mean_self_consumption")
                 .set_index(["variable", "year"]),
                 tmp.groupby("year")
                 .max()
                 .reset_index()
-                .melt(id_vars="year", value_name="max_self_consumption")
+                .melt(id_vars="year", var_name="variable", value_name="max_self_consumption")
                 .set_index(["variable", "year"]),
             ),
             axis=1,
