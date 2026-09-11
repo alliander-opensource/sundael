@@ -31,11 +31,8 @@ the conventions of [Conventional Commits (v1.0.0)](https://www.conventionalcommi
 
 ### Automatic versioning
 
-We use [Autobahn](https://github.com/Alliander/Autobahn) CI/CD pipeline, which includes GitVersion for versioning. In `GitVersion.yml`, 
-we have configured GitVersion to enable [mainline](https://gitversion.net/docs/reference/modes/mainline) development. The main rule of 
-mainline development is that `main` is always in a state that it could be deployed to production. A pull request that is merged to 
-`main` will result in a version bump and a released package on [JFrog Artifactory](https://alliander.jfrog.io/). If needed, you can 
-use `semver: none` in the commit message to skip a version bump. Otherwise:
+We use [Semantic Release](https://semantic-release.org/) for versioning based on
+conventional commits. If needed, you can use `semver: none` in the commit message to skip a version bump. Otherwise:
 
 - Commit messages starting with `fix:` trigger a patch version bump
 - Commit messages starting with `feat:` trigger a minor version bump

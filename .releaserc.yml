@@ -1,5 +1,5 @@
 # semantic-release configuration file: https://semantic-release.gitbook.io/semantic-release/usage/configuration
-# Used by the release workflow: .github/workflows/autobahn-release.yml
+# Used by the release workflow: .github/workflows/release.yml
 preset: conventionalcommits
 branches:
   - main
