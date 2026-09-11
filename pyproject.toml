@@ -64,14 +64,6 @@ constraint-dependencies = ["llvmlite<0.46"]
 "jupyter_server" = "3 days" # Overrides the cooldown
 
 
-[[tool.uv.index]]
-name = "artifactory"
-url = "https://alliander.jfrog.io/artifactory/api/pypi/pypi-all/simple"
-publish-url = "https://alliander.jfrog.io/artifactory/api/pypi/pypi-all"
-default = true
-exclude-newer = "7 days"
-authenticate = "always"
-
 
 [tool.mypy]
 ignore_missing_imports = true
