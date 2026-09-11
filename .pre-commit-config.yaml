@@ -1,8 +1,6 @@
 # This pre-commit config can be installed by running
 # 'pip install pre-commit'.
 # 'pre-commit install'.
-# You can find the current Autobahn's settings at:
-# https://github.com/Alliander/Autobahn/blob/main/actions/common/code-quality/ruff.toml
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.

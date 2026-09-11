@@ -6,45 +6,37 @@ on:
   pull_request:
 
 permissions:
-  id-token: write # Required for getting the access token for Artifactory
+  id-token: write
   contents: read
 
 jobs:
   test:
-    runs-on: [self-hosted, Linux, ubuntu-24]
+    runs-on: 
+      group: managed-linux
     steps:
 
-      - name: Get Artifactory credentials
-        id: get-artifactory-credentials
-        uses: Alliander/get-artifactory-credentials@1f8ad4d6cd7c27ec25694fb06eb55775aa5b8b2a # v1.1.0
-
-      - name: Check out source code
+      - name: 💾 Check out source code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3     
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install uv
+      - name: 🤖 Install uv
         shell: bash
         run: |
-          echo "machine alliander.jfrog.io login ${{ steps.get-artifactory-credentials.outputs.username }} password ${{ steps.get-artifactory-credentials.outputs.access-token }}" >> ~/.netrc
-          chmod 600 ~/.netrc
-          pip install uv==0.11.20 --index-url https://alliander.jfrog.io/artifactory/api/pypi/pypi-all/simple
+          pip install uv==0.11.20
 
-      - name: Python package installation
+      - name: 🐍 Python package installation
         shell: bash
         run: uv sync --frozen --all-extras
-        env:
-          UV_INDEX_PYPI_ALL_USERNAME: ${{ steps.get-artifactory-credentials.outputs.username }}
-          UV_INDEX_PYPI_ALL_PASSWORD: ${{ steps.get-artifactory-credentials.outputs.access-token }}
-      
-      - name: Linting - ruff check 
+
+      - name: 🧹Linting - ruff check 
         run: uv run --frozen ruff check .
         
-      - name: Linting - ruff format
+      - name: 📝 Linting - ruff format
         run: uv run --frozen ruff format --check .
 
-      - name: Linting - mypy
+      - name: 👔 Linting - mypy
         run: uv run mypy .
       
-      - name: Tests
+      - name: 📋 Tests
         run: uv run --frozen pytest
