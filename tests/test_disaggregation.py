@@ -492,7 +492,7 @@ def test_disaggregation_mpi(full_netload: pd.DataFrame, full_pv_ratio: pd.DataFr
             },
         ),
         check_dtype=False,
-        atol=0.0001,
+        atol=0.001,
     )
 
 

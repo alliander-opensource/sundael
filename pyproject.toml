@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "sundael"
 version = "1.0.0"
-description = "Functionality related to PV (such as disaggregation of profiles)"
+description = "SUNlight-based Disaggregation using Anchored rEference profiles Library"
 authors = [
     { name = "Jacco Heres", email = "jacco.heres@alliander.com" },
     { name = "Jeroen van de Logt", email = "jeroen.vande.logt@alliander.com" },
