@@ -317,6 +317,7 @@ def test_disaggregate_with_sampling_cap() -> None:
         pv_ratio=ratio,
         area_mapping={"c1": "area1"},
         temperature=np.zeros(len(dt)),
+        config=DEFAULT_CONFIG.model_copy(update={"auto_infer_temp": False}),
     )
 
     netload = pd.DataFrame([np.linspace(-1, 1, len(dt))], index=["c1"], columns=dt)
